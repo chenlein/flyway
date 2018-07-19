@@ -22,6 +22,7 @@ import org.flywaydb.core.api.logging.LogFactory;
 import org.flywaydb.core.internal.database.cockroachdb.CockroachDBDatabase;
 import org.flywaydb.core.internal.database.db2.DB2Database;
 import org.flywaydb.core.internal.database.derby.DerbyDatabase;
+import org.flywaydb.core.internal.database.dm7.DM7Database;
 import org.flywaydb.core.internal.database.h2.H2Database;
 import org.flywaydb.core.internal.database.hsqldb.HSQLDBDatabase;
 import org.flywaydb.core.internal.database.informix.InformixDatabase;
@@ -214,6 +215,9 @@ public class DatabaseFactory {
 
 
             );
+        }
+        if (databaseProductName.startsWith("DM")) {
+            return new DM7Database(configuration, connection, originalAutoCommit);
         }
         throw new FlywayException("Unsupported Database: " + databaseProductName);
     }
